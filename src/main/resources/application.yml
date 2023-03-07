@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: template
+    id: com.sphirye.spring.boot.template
+
+  main:
+    allow-circular-references: true
+
+  config:
+    import: optional:file:.env[.properties]
+
+  profiles:
+    active:
+
+  datasource:
+    url: ${DATASOURCE_URL}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: update
+      use-new-id-generator-mappings: false
+
+  thymeleaf:
+    cache: false
+    enabled: true
+
+server:
+  port: 3000
+  error:
+    include-message: always
+
+jwt:
+  header: Authorization
+  secret: ${JWT_SECRET_KEY}
+  token-validity-in-seconds: 60
+
+custom:
+  twitter-token: ${TWITTER_BEARER_TOKEN}
+  test-database: ${TEST_DATABASE}
+
+  sudo-username: ${ADMIN_USERNAME}
+  sudo-email: ${ADMIN_EMAIL}
+  sudo-password: ${ADMIN_PASSWORD}
