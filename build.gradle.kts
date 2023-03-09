@@ -32,7 +32,9 @@ dependencies {
 	runtimeOnly("com.h2database:h2")
 	runtimeOnly("mysql:mysql-connector-java")
 	implementation("org.mariadb.jdbc:mariadb-java-client:3.0.6")
+
 	implementation("org.hibernate:hibernate-jpamodelgen")
+	kapt("org.hibernate:hibernate-jpamodelgen")
 
 	// KOTLIN
 	implementation("org.jetbrains.kotlin:kotlin-reflect")

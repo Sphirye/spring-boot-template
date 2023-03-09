@@ -20,6 +20,11 @@ class UserService {
     fun init() {
         if (userRepository.count() <= 0) {
             create(PropertyConfig.SUDO_USERNAME , PropertyConfig.SUDO_EMAIL, PropertyConfig.SUDO_PASSWORD, "SUPER_ADMIN")
+
+            create("XD" , "elpepeeee", "12345678", "SUPER_ADMIN")
+            create("potasio" , "potasioo", "12345678", "SUPER_ADMIN")
+            create("eso tilin" , "eso tilin", "12345678", "SUPER_ADMIN")
+
         }
     }
 

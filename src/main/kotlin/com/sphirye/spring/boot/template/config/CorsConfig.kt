@@ -1,5 +1,6 @@
 package com.sphirye.spring.boot.template.config
 
+import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.Ordered
@@ -28,6 +29,7 @@ class CorsConfig {
         config.addAllowedMethod("*")
         config.maxAge = 3600
         source.registerCorsConfiguration("/api/**", config)
+        source.registerCorsConfiguration("/h2-console/**", config)
         return CorsFilter(source)
     }
 
@@ -43,17 +45,21 @@ class CorsConfig {
             response.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Authorization, Content-Type")
             response.setHeader("Access-Control-Max-Age", "3600")
             response.setHeader("Access-Control-Expose-Headers", "X-Total-Count")
-            if ("OPTIONS".equals(request.method, ignoreCase = true)) {
-                response.status = HttpServletResponse.SC_OK
-            } else {
-                chain.doFilter(req, res)
-            }
+            if ("OPTIONS".equals(request.method, ignoreCase = true)) { response.status = HttpServletResponse.SC_OK }
+            else { chain.doFilter(req, res) }
         }
 
         companion object {
             private const val URL_CORS_ORIGIN = "*"
             private const val URL_CORS_METHODS = "*"
         }
+    }
+
+    @Bean
+    fun filterRegistrationBean(): FilterRegistrationBean<*> {
+        val registrationBean = FilterRegistrationBean(CorsConfig())
+        registrationBean.addUrlPatterns("/h2-console/*")
+        return registrationBean
     }
 
 }

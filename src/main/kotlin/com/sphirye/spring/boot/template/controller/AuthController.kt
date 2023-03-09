@@ -1,5 +1,6 @@
 package com.sphirye.spring.boot.template.controller
 
+import com.sphirye.spring.boot.template.entity.dto.CustomUserTokenDetails
 import com.sphirye.spring.boot.template.entity.dto.LoginResponse
 import com.sphirye.spring.boot.template.security.SessionManager
 import com.sphirye.spring.boot.template.service.AuthService
@@ -23,8 +24,8 @@ class AuthController {
     @Autowired lateinit var sessionManager: SessionManager
 
     @GetMapping("/api/test")
-    fun bruh(): ResponseEntity<Authentication> {
-        return ResponseEntity.status(HttpStatus.OK).body(SecurityContextHolder.getContext().authentication)
+    fun bruh(): ResponseEntity<Any> {
+        return ResponseEntity.status(HttpStatus.OK).body(sessionManager.getAuthentication())
     }
 
     @PostMapping("/public/auth/login")

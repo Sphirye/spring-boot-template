@@ -1,13 +1,15 @@
 package com.sphirye.spring.boot.template.security
 
+import com.sphirye.spring.boot.template.entity.dto.CustomUserTokenDetails
+import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 
 @Service
 class SessionManager {
 
-    fun getUser(): Any { return SecurityContextHolder.getContext().authentication.principal }
+    fun getUserDetails(): CustomUserTokenDetails { return getAuthentication().details as CustomUserTokenDetails }
 
-    fun getAuthentication(): Any { return SecurityContextHolder.getContext().authentication }
+    fun getAuthentication(): Authentication { return SecurityContextHolder.getContext().authentication }
 
 }

@@ -53,6 +53,8 @@ class SecurityConfig {
             .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/signup").permitAll()
             .antMatchers("/public/**").permitAll()
+            .antMatchers("/h2-console/**").permitAll()
+
             .anyRequest().authenticated()
 
             .and()

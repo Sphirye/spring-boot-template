@@ -43,7 +43,7 @@ server:
 jwt:
   header: Authorization
   secret: ${JWT_SECRET_KEY}
-  token-validity-in-seconds: 60
+  token-validity-in-seconds: 1600
 
 custom:
   twitter-token: ${TWITTER_BEARER_TOKEN}

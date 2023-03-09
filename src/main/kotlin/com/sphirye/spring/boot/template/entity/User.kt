@@ -6,15 +6,17 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import java.io.Serializable
 import java.util.stream.Collectors
 import javax.persistence.*
+import javax.validation.constraints.Email
 
 @Entity
 @Table(
     name = "`USER`",
-//    uniqueConstraints = [UniqueConstraint(columnNames = [User_.EMAIL])]
+    uniqueConstraints = [UniqueConstraint(columnNames = [User_.EMAIL])]
 )
-data class User (
+class User (
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     var id: Long? = null,
+    @Email(message = "Invalid email")
     var email: String? = null,
     var username: String? = null,
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) @JsonIgnore
