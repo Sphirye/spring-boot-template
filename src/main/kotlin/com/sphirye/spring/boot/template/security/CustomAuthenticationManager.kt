@@ -1,5 +1,6 @@
 package com.sphirye.spring.boot.template.security
 
+import com.sphirye.spring.boot.template.entity.Authority
 import com.sphirye.spring.boot.template.entity.dto.CustomUserDetails
 import com.sphirye.spring.boot.template.service.UserService
 import org.springframework.beans.factory.annotation.Autowired
@@ -8,8 +9,10 @@ import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.DisabledException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UsernameNotFoundException
+import java.util.stream.Collectors
 
 class CustomAuthenticationManager : AuthenticationManager {
 
@@ -26,10 +29,14 @@ class CustomAuthenticationManager : AuthenticationManager {
             val user = userService.findByEmail(email)
             if (!user.enabled) { throw DisabledException("User is not activated") }
 
+            val authorities = user.authorities!!.stream()
+                .map { authority: Authority -> SimpleGrantedAuthority(authority.role) }
+                .collect(Collectors.toList())
+
             customUserDetails = CustomUserDetails(
                 username = user.username,
                 password = null,
-                authorities = user.getSimpleGrantedAuthorities(),
+                authorities = authorities,
                 id = user.id,
                 email = email
             )

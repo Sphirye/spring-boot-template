@@ -12,4 +12,10 @@ class SessionManager {
 
     fun getAuthentication(): Authentication { return SecurityContextHolder.getContext().authentication }
 
+    fun isAuthenticated(): Boolean {
+        return if (SecurityContextHolder.getContext().authentication == null) {
+            false
+        } else SecurityContextHolder.getContext().authentication.details is CustomUserTokenDetails
+    }
+
 }

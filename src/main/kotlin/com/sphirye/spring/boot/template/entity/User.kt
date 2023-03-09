@@ -27,11 +27,6 @@ class User (
         joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "role", referencedColumnName = "role")]
     )
+    @JsonIgnore
     var authorities: Set<Authority>? = null
-): Serializable {
-    fun getSimpleGrantedAuthorities(): MutableList<SimpleGrantedAuthority> {
-        return authorities!!.stream()
-            .map { authority: Authority -> SimpleGrantedAuthority(authority.role) }
-            .collect(Collectors.toList())
-    }
-}
+): Serializable
